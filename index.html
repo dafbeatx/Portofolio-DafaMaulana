@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dafa Maulana</title>
+    <title>Portofolio Interaktif - Dafa Maulana</title>
     
     <!-- Open Graph / Facebook / WhatsApp Preview -->
     <meta property="og:type" content="website">
+    <!-- Ganti URL ini dengan link website asli Anda nanti saat sudah di-upload (misal: Vercel/GitHub Pages) -->
     <meta property="og:url" content="https://dafbeatx.github.io/"> 
     <meta property="og:title" content="Portofolio Dafa Maulana - Guru & Visual Designer">
     <meta property="og:description" content="Lihat karya video, desain, dan pengembangan web saya. Guru Informatika & Content Creator.">
+    
+    <!-- PENTING UNTUK WHATSAPP: -->
+    <!-- Menggunakan Direct Link foto Anda agar muncul di WhatsApp -->
     <meta property="og:image" content="https://i.ibb.co.com/CKJDY1rH/Dafa-Maulana.jpg">
 
     <!-- Twitter -->
@@ -165,7 +169,6 @@
     <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center overflow-hidden reveal active">
         
         <!-- Animated Background Blobs -->
-        <!-- Adjusted mix-blend-mode for dark mode visibility using CSS classes logic in head or manual structure -->
         <div class="absolute inset-0 w-full h-full -z-10 pointer-events-none">
             <div class="absolute top-0 left-10 w-72 h-72 bg-indigo-300 dark:bg-indigo-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl opacity-30 dark:opacity-20 animate-blob transition-colors duration-500"></div>
             <div class="absolute top-0 right-10 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl opacity-30 dark:opacity-20 animate-blob animation-delay-2000 transition-colors duration-500"></div>
@@ -174,12 +177,15 @@
 
         <!-- Content container to ensure z-index above blobs -->
         <div class="relative z-10 flex flex-col items-center">
+            
             <!-- FOTO PROFIL -->
+            <!-- Sekarang menggunakan link Direct Image yang benar -->
             <div class="relative w-32 h-32 md:w-44 md:h-44 mb-8 rounded-full overflow-hidden border-4 border-white dark:border-stone-700 shadow-xl ring-1 ring-stone-200 dark:ring-stone-600 group transition-all duration-500">
                 <img 
-                    src="Picture/Dafa Maulana.jpg" 
+                    src="https://i.ibb.co.com/CKJDY1rH/Dafa-Maulana.jpg" 
                     alt="Foto Dafa Maulana" 
                     class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Dafa+Maulana&background=4f46e5&color=fff&size=256'"
                 >
             </div>
 
