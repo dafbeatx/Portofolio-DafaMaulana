@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Interaktif - Dafa Maulana</title>
+    
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dafbeatx.github.io/"> 
+    <meta property="og:title" content="Portofolio Dafa Maulana - Guru & Visual Designer">
+    <meta property="og:description" content="Lihat karya video, desain, dan pengembangan web saya. Guru Informatika & Content Creator.">
+    <meta property="og:image" content="https://ui-avatars.com/api/?name=Dafa+Maulana&background=4f46e5&color=fff&size=512">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Portofolio Dafa Maulana">
+    <meta property="twitter:description" content="Lihat karya video, desain, dan pengembangan web saya.">
+    <meta property="twitter:image" content="https://ui-avatars.com/api/?name=Dafa+Maulana&background=4f46e5&color=fff&size=512">
+
+    <!-- Favicon DM. -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23ffffff%22 stroke=%22%23312e81%22 stroke-width=%224%22/><text x=%2250%22 y=%2255%22 font-family=%22sans-serif%22 font-weight=%22bold%22 font-size=%2245%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22><tspan fill=%22%23312e81%22>DM</tspan><tspan fill=%22%236366f1%22>.</tspan></text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Mengaktifkan dark mode berbasis class
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+        
+        /* Glass Panel Adaptif */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .dark .glass-panel {
+            background: rgba(28, 25, 23, 0.8); /* stone-900 with opacity */
+            border-bottom: 1px solid rgba(68, 64, 60, 0.5); /* stone-700 */
+        }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 100ms; }
+        .reveal-delay-2 { transition-delay: 200ms; }
+        .reveal-delay-3 { transition-delay: 300ms; }
+
+        /* Blob Animation Keyframes */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        /* Toggle Button Animation */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #68D391;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #68D391;
+        }
+        
+        /* Smooth Icon Transition */
+        .icon-sun, .icon-moon {
+            transition: all 0.5s ease;
+        }
+        /* Hide/Show logic managed via inline classes in JS or standard CSS classes */
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 dark:bg-stone-900 dark:text-stone-100 antialiased selection:bg-indigo-100 selection:text-indigo-900 dark:selection:bg-indigo-900 dark:selection:text-indigo-100 overflow-x-hidden transition-colors duration-500">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-panel shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-bold text-xl tracking-tight text-indigo-900 dark:text-indigo-400 transition-colors">DM<span class="text-indigo-500">.</span></span>
+                </div>
+
+                <!-- Desktop Menu & Toggle -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#hero" class="text-stone-600 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Beranda</a>
+                    <a href="#about" class="text-stone-600 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Tentang & Data</a>
+                    <a href="#projects" class="text-stone-600 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Proyek</a>
+                    <a href="#contact" class="text-stone-600 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Kontak</a>
+                    
+                    <!-- Dark Mode Toggle Button (Desktop) -->
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors focus:outline-none" aria-label="Toggle Dark Mode">
+                        <!-- Sun Icon -->
+                        <svg id="sun-icon" class="w-6 h-6 text-yellow-500 transform transition-transform duration-500 rotate-0 dark:rotate-90 dark:opacity-0 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <!-- Moon Icon -->
+                        <svg id="moon-icon" class="w-6 h-6 text-indigo-400 transform transition-transform duration-500 -rotate-90 opacity-0 hidden dark:opacity-100 dark:block dark:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button & Toggle -->
+                <div class="md:hidden flex items-center gap-4">
+                    <!-- Dark Mode Toggle Button (Mobile) -->
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors focus:outline-none">
+                        <svg class="w-6 h-6 text-yellow-500 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg class="w-6 h-6 text-indigo-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+
+                    <button id="mobile-menu-btn" class="text-stone-600 dark:text-stone-300 hover:text-indigo-600 focus:outline-none p-2">
+                        <span class="text-2xl">☰</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#hero" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 dark:text-stone-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-stone-50 dark:hover:bg-stone-800">Beranda</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 dark:text-stone-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-stone-50 dark:hover:bg-stone-800">Tentang & Data</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 dark:text-stone-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-stone-50 dark:hover:bg-stone-800">Proyek</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 dark:text-stone-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-stone-50 dark:hover:bg-stone-800">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Animated Background -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center overflow-hidden reveal active">
+        
+        <!-- Animated Background Blobs -->
+        <!-- Adjusted mix-blend-mode for dark mode visibility using CSS classes logic in head or manual structure -->
+        <div class="absolute inset-0 w-full h-full -z-10 pointer-events-none">
+            <div class="absolute top-0 left-10 w-72 h-72 bg-indigo-300 dark:bg-indigo-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl opacity-30 dark:opacity-20 animate-blob transition-colors duration-500"></div>
+            <div class="absolute top-0 right-10 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl opacity-30 dark:opacity-20 animate-blob animation-delay-2000 transition-colors duration-500"></div>
+            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 dark:bg-pink-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-2xl opacity-30 dark:opacity-20 animate-blob animation-delay-4000 transition-colors duration-500"></div>
+        </div>
+
+        <!-- Content container to ensure z-index above blobs -->
+        <div class="relative z-10 flex flex-col items-center">
+            <!-- FOTO PROFIL -->
+            <div class="relative w-32 h-32 md:w-44 md:h-44 mb-8 rounded-full overflow-hidden border-4 border-white dark:border-stone-700 shadow-xl ring-1 ring-stone-200 dark:ring-stone-600 group transition-all duration-500">
+                <img 
+                    src="Picture/Dafa Maulana.jpg" 
+                    alt="Foto Dafa Maulana" 
+                    class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+                >
+            </div>
+
+            <div class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider text-indigo-700 dark:text-indigo-300 uppercase bg-indigo-50 dark:bg-indigo-900/50 rounded-full border border-indigo-100 dark:border-indigo-800 transition-colors">
+                Portfolio & Analisis Profil
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-stone-900 dark:text-white tracking-tight mb-6 transition-colors">
+                Halo, saya <span class="text-indigo-600 dark:text-indigo-400">Dafa Maulana</span>
+            </h1>
+            <p class="mt-4 max-w-2xl text-xl text-stone-500 dark:text-stone-400 mb-10 leading-relaxed transition-colors">
+                Guru Informatika, Content Creator, dan Visual Designer yang menjembatani dunia pendidikan dengan teknologi digital.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#projects" class="px-8 py-3.5 rounded-lg bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                    Lihat Karya
+                </a>
+                <a href="#contact" class="px-8 py-3.5 rounded-lg bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-200 border border-stone-200 dark:border-stone-700 font-semibold hover:bg-stone-50 dark:hover:bg-stone-700 hover:border-stone-300 transition-all duration-300">
+                    Hubungi Saya
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Analytics Section -->
+    <section id="about" class="py-20 bg-white dark:bg-stone-900 border-y border-stone-200 dark:border-stone-800 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center md:text-left reveal">
+                <h2 class="text-3xl font-bold text-stone-900 dark:text-white mb-4 transition-colors">Profil & Analisis Keahlian</h2>
+                <p class="text-stone-600 dark:text-stone-400 max-w-3xl transition-colors">
+                    Bagian ini menyajikan tinjauan mendalam tentang latar belakang profesional dan distribusi kompetensi teknis saya. Data divisualisasikan untuk memberikan gambaran cepat mengenai keseimbangan antara kemampuan kreatif dan teknis.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="space-y-6 reveal">
+                    <div class="prose prose-stone dark:prose-invert">
+                        <p class="text-lg leading-relaxed text-stone-700 dark:text-stone-300 transition-colors">
+                            Saya adalah seorang <strong>Guru Informatika</strong>, content creator, coder, serta dokumenter Mafindo Bogor. Fokus utama saya terletak pada desain visual dan pengembangan website untuk mendukung ekosistem pendidikan.
+                        </p>
+                        <p class="text-lg leading-relaxed text-stone-700 dark:text-stone-300 transition-colors">
+                            Saya memiliki hasrat yang kuat untuk terus mengeksplorasi teknologi baru seperti <strong>Artificial Intelligence (A.I)</strong>, coding, dan ethical hacking. Saya percaya bahwa pembelajaran seumur hidup adalah kunci untuk tetap relevan, seringkali mengasah keahlian hingga larut malam.
+                        </p>
+                    </div>
+                    
+                    <!-- Quick Stats Grid -->
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="p-4 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-100 dark:border-stone-700 transition-colors">
+                            <div class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">3+</div>
+                            <div class="text-sm font-medium text-stone-500 dark:text-stone-400">Domain Keahlian (Edu/Tech/Art)</div>
+                        </div>
+                        <div class="p-4 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-100 dark:border-stone-700 transition-colors">
+                            <div class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">7+</div>
+                            <div class="text-sm font-medium text-stone-500 dark:text-stone-400">Tools Utama Dikuasai</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualization -->
+                <div class="bg-stone-50 dark:bg-stone-800 p-6 rounded-2xl border border-stone-100 dark:border-stone-700 shadow-sm reveal reveal-delay-2 transition-colors">
+                    <h3 class="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-6 text-center transition-colors">Peta Kompetensi (Radar Skill)</h3>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-stone-400 mt-4">Data berdasarkan penilaian mandiri terhadap efisiensi penggunaan alat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-stone-50 dark:bg-black transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 reveal">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-3xl font-bold text-stone-900 dark:text-white mb-4 transition-colors">Galeri Proyek</h2>
+                    <p class="text-stone-600 dark:text-stone-400 max-w-2xl transition-colors">
+                        Koleksi karya terpilih yang mencakup produksi video sinematik, dokumentasi sosial, dan pengembangan aplikasi web untuk pendidikan. Gunakan filter untuk menavigasi kategori.
+                    </p>
+                </div>
+                <!-- Filters -->
+                <div class="flex space-x-2 bg-white dark:bg-stone-800 p-1.5 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 transition-colors">
+                    <button class="filter-btn px-4 py-2 rounded-md text-sm font-medium transition-all bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300" data-filter="all">Semua</button>
+                    <button class="filter-btn px-4 py-2 rounded-md text-sm font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700 transition-all" data-filter="video">Video & Foto</button>
+                    <button class="filter-btn px-4 py-2 rounded-md text-sm font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700 transition-all" data-filter="web">Web Dev</button>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be injected here via JS with animation classes -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Analysis Section -->
+    <section class="py-20 bg-white dark:bg-stone-900 border-t border-stone-200 dark:border-stone-800 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 text-center reveal">
+                <h2 class="text-2xl font-bold text-stone-900 dark:text-white transition-colors">Analisis Penggunaan Tools</h2>
+                <p class="text-stone-600 dark:text-stone-400 mt-2 transition-colors">Frekuensi penggunaan teknologi dalam proyek-proyek terbaru.</p>
+            </div>
+            <div class="chart-container max-w-3xl reveal reveal-delay-2">
+                <canvas id="toolsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-stone-900 dark:bg-black text-white transition-colors duration-500">
+        <div class="max-w-4xl mx-auto px-4 text-center reveal">
+            <h2 class="text-3xl font-bold mb-6">Mari Berkolaborasi</h2>
+            <p class="text-stone-300 mb-10 text-lg">
+                Tertarik untuk bekerja sama dalam proyek kreatif, fotografi, atau pengembangan teknologi pendidikan?
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
+                <a href="mailto:Dafbeatx@gmail.com" class="flex items-center gap-3 px-6 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors w-full md:w-auto justify-center">
+                    <span class="font-bold">Kirim Email</span>
+                    <span class="opacity-75">Dafbeatx@gmail.com</span>
+                </a>
+            </div>
+
+            <div class="border-t border-stone-800 pt-10 flex flex-wrap justify-center gap-8">
+                <a href="https://github.com/dafbeatx" target="_blank" class="text-stone-400 hover:text-white transition-colors flex items-center gap-2">
+                    GitHub ↗
+                </a>
+                <a href="https://www.instagram.com/dafbeatx?igsh=a3Y0YjRnNDIzNGRI" target="_blank" class="text-stone-400 hover:text-white transition-colors flex items-center gap-2">
+                    Instagram ↗
+                </a>
+                <a href="https://youtube.com/@dafbeatx?si=Z5I0eUAz1aFZ5tvf" target="_blank" class="text-stone-400 hover:text-white transition-colors flex items-center gap-2">
+                    YouTube ↗
+                </a>
+            </div>
+            
+            <p class="mt-12 text-sm text-stone-500">© 2025 Dafa Maulana. All rights reserved.</p>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/62895351251395?text=Halo%20Dafa,%20saya%20tertarik%20untuk%20berkolaborasi." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 p-4 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 flex items-center justify-center group" aria-label="Chat via WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </a>
+
+    <!-- JavaScript Implementation -->
+    <script>
+        // Data Store
+        const skillsData = {
+            labels: ['Video Editing', 'Photo Editing', 'MS Office', 'Canva', 'Web Dev', 'A.I. & Coding'],
+            data: [90, 85, 95, 88, 75, 70] 
+        };
+
+        const projectsData = [
+            {
+                id: 1,
+                title: "Video Hari Santri",
+                category: "video",
+                desc: "Dokumentasi visual peringatan Hari Santri Nasional yang menangkap kekhidmatan upacara, kemeriahan perayaan, serta semangat para santri dalam menjaga tradisi.", 
+                tech: ["Capcut", "Nikon D3100"],
+                youtubeId: "rR6xw9Fztng?si=BP7vmApm2hEVIixJ", 
+                link: null
+            },
+            {
+                id: 2,
+                title: "Video Dokumenter KKN",
+                category: "video",
+                desc: "Dokumentasi lapangan kegiatan pengabdian masyarakat di Desa Curug, Jasinga, Bogor.",
+                tech: ["Capcut", "Nikon D3100", "Canva"],
+                youtubeId: "6PHsYmT0fXA", 
+                link: null
+            },
+            {
+                id: 3,
+                title: "Website Input Nilai",
+                category: "web",
+                desc: "Aplikasi web untuk membantu guru mengolah data penilaian secara terstruktur dan efisien.",
+                tech: ["VS Code", "Github", "Vercel", "A.I"],
+                youtubeId: null,
+                link: "https://web-input-nilai.vercel.app/"
+            }
+        ];
+
+        // Tool Usage Analysis
+        const toolCounts = {};
+        projectsData.forEach(p => {
+            p.tech.forEach(t => {
+                toolCounts[t] = (toolCounts[t] || 0) + 1;
+            });
+        });
+
+        // DOM Elements
+        const navbar = document.getElementById('navbar');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const projectGrid = document.getElementById('project-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        // Dark Mode Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        
+        // Chart Instances (Global scope to allow update)
+        let skillsChartInstance = null;
+        let toolsChartInstance = null;
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme(); // Check local storage for theme
+            initCharts();
+            renderProjects('all');
+            initScrollAnimation();
+        });
+
+        // --- Theme Logic ---
+        function initTheme() {
+            // Check for saved user preference, if any, on load
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+            // Update charts color when theme changes
+            updateChartTheme();
+        }
+
+        // Event Listeners for Theme Toggle
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+
+        // --- Scroll Animation Logic ---
+        function initScrollAnimation() {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const elementInView = (el, dividend = 1) => {
+                const elementTop = el.getBoundingClientRect().top;
+                return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
+            };
+
+            const displayScrollElement = (element) => {
+                element.classList.add('active');
+            };
+
+            const handleScrollAnimation = () => {
+                revealElements.forEach((el) => {
+                    if (elementInView(el, 1.1)) { 
+                        displayScrollElement(el);
+                    }
+                })
+            }
+
+            // Trigger once on load
+            handleScrollAnimation();
+            
+            // Trigger on scroll
+            window.addEventListener('scroll', () => {
+                handleScrollAnimation();
+            });
+        }
+
+        // --- Charts Logic ---
+        function getChartColors() {
+            const isDark = document.documentElement.classList.contains('dark');
+            return {
+                text: isDark ? '#e5e7eb' : '#44403c', // stone-200 : stone-700
+                grid: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
+                angleLines: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                backdrop: isDark ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0.9)' // radar chart background labels
+            };
+        }
+
+        function updateChartTheme() {
+            if (!skillsChartInstance || !toolsChartInstance) return;
+            
+            const colors = getChartColors();
+            
+            // Update Skills Chart
+            skillsChartInstance.options.scales.r.pointLabels.color = colors.text;
+            skillsChartInstance.options.scales.r.grid.color = colors.grid;
+            skillsChartInstance.options.scales.r.angleLines.color = colors.angleLines;
+            skillsChartInstance.update();
+
+            // Update Tools Chart
+            toolsChartInstance.options.scales.x.ticks.color = colors.text;
+            toolsChartInstance.options.scales.y.ticks.color = colors.text;
+            toolsChartInstance.update();
+        }
+
+        function initCharts() {
+            const colors = getChartColors();
+
+            // Radar Chart for Skills
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            skillsChartInstance = new Chart(ctxSkills, {
+                type: 'radar',
+                data: {
+                    labels: skillsData.labels,
+                    datasets: [{
+                        label: 'Tingkat Keahlian',
+                        data: skillsData.data,
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(79, 70, 229, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: colors.angleLines },
+                            grid: { color: colors.grid },
+                            pointLabels: {
+                                font: { size: 12, family: "'Inter', sans-serif" },
+                                color: colors.text
+                            },
+                            ticks: { display: false, max: 100, backdropColor: colors.backdrop }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Bar Chart for Tools
+            const ctxTools = document.getElementById('toolsChart').getContext('2d');
+            toolsChartInstance = new Chart(ctxTools, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(toolCounts),
+                    datasets: [{
+                        label: 'Jumlah Proyek',
+                        data: Object.values(toolCounts),
+                        backgroundColor: 'rgba(99, 102, 241, 0.8)', // Indigo-500
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { display: false },
+                            ticks: { stepSize: 1, color: colors.text }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: colors.text }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // --- Project Rendering & Filtering ---
+        function renderProjects(filter) {
+            projectGrid.innerHTML = '';
+            
+            const filtered = filter === 'all' 
+                ? projectsData 
+                : projectsData.filter(p => p.category === filter);
+
+            filtered.forEach((project, index) => {
+                const techBadges = project.tech.map(t => 
+                    `<span class="inline-block bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 text-xs px-2 py-1 rounded mr-1 mb-1 border border-stone-200 dark:border-stone-600">${t}</span>`
+                ).join('');
+
+                let mediaContent = '';
+                if (project.youtubeId) {
+                    mediaContent = `
+                        <div class="aspect-video w-full bg-black rounded-lg overflow-hidden mb-4 relative group">
+                            <iframe 
+                                class="w-full h-full"
+                                src="https://www.youtube.com/embed/${project.youtubeId}" 
+                                title="${project.title}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    `;
+                } else if (project.link) {
+                    mediaContent = `
+                        <div class="aspect-video w-full bg-indigo-50 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mb-4 border border-indigo-100 dark:border-indigo-800 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/50 transition-colors cursor-pointer" onclick="window.open('${project.link}', '_blank')">
+                            <div class="text-center">
+                                <span class="text-4xl mb-2 block">🌐</span>
+                                <span class="text-indigo-600 dark:text-indigo-400 font-medium">Buka Website</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const card = document.createElement('div');
+                card.className = `bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 overflow-hidden hover:shadow-md transition-all p-6 flex flex-col h-full reveal reveal-delay-${(index % 3) + 1}`;
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-stone-900 dark:text-white leading-tight transition-colors">${project.title}</h3>
+                            ${project.link ? `<a href="${project.link}" target="_blank" class="text-stone-400 dark:text-stone-500 hover:text-indigo-600 dark:hover:text-indigo-400">↗</a>` : ''}
+                        </div>
+                        <p class="text-stone-500 dark:text-stone-400 text-sm mb-4 transition-colors">${project.desc}</p>
+                        ${mediaContent}
+                        <div class="mt-2">
+                            ${techBadges}
+                        </div>
+                    </div>
+                `;
+                projectGrid.appendChild(card);
+            });
+
+            // Re-trigger reveal animation check for newly added elements
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        // --- Event Listeners ---
+        
+        // Filter Buttons
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-indigo-100', 'text-indigo-700', 'dark:bg-indigo-900', 'dark:text-indigo-300');
+                    b.classList.add('text-stone-600', 'hover:bg-stone-100', 'dark:text-stone-400', 'dark:hover:bg-stone-700');
+                });
+                btn.classList.remove('text-stone-600', 'hover:bg-stone-100', 'dark:text-stone-400', 'dark:hover:bg-stone-700');
+                btn.classList.add('bg-indigo-100', 'text-indigo-700', 'dark:bg-indigo-900', 'dark:text-indigo-300');
+
+                const filterValue = btn.getAttribute('data-filter');
+                renderProjects(filterValue);
+            });
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                // Dark mode handled via CSS glass-panel class
+            }
+        });
+
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+    </script>
+</body>
+</html>
